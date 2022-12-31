@@ -38,7 +38,8 @@
     "js-binary": "^1.2.0",
     "pbf": "^3.2.1",
     "protobufjs": "^6.10.1",
-    "protons": "^1.2.1"
+    "protons": "^1.2.1",
+    "scale-codec": "^0.10.0"
   },
   "devDependencies": {
     "@types/jest": "25.2.3",

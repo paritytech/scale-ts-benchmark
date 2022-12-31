@@ -11,6 +11,7 @@ import ProtoGoogleSchema from './data/google-protobuf_pb';
 import ProtoPbfSchema from './data/pbf_pb';
 import { benchmark, BenchmarkResult } from './utils/helper';
 import bser from 'bser';
+import * as $ from 'scale-codec';
 
 export function testJson(testData: any): Promise<BenchmarkResult> {
   return benchmark({
@@ -279,5 +280,27 @@ export function testBser(testData: any): Promise<BenchmarkResult> {
     encode: data => bser.dumpToBuffer(data),
     decode: data => bser.loadFromBuffer(data),
     sampleDecoded: data => data.items[0],
+  });
+}
+
+const $data = $.field('items', $.array($.object($.field('x', $.i32), $.field('y', $.f64), $.field('z', $.f64))));
+
+export function testScale(testData: any): Promise<BenchmarkResult> {
+  return benchmark({
+    data: testData,
+    encode: (data) => $data.encode(data),
+    decode: (data) => $data.decode(data),
+    sampleDecoded: (data) => data.items[0],
+  });
+}
+
+const $unmapped = $.array($.tuple($.i32, $.f64, $.f64));
+
+export function testScaleUnmapped(testData: any): Promise<BenchmarkResult> {
+  return benchmark({
+    data: testData,
+    encode: (data) => $unmapped.encode(data),
+    decode: (data) => $unmapped.decode(data),
+    sampleDecoded: (data) => data[0],
   });
 }

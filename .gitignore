@@ -12,7 +12,7 @@ node_modules/
 tmp/
 /.local/
 /media/
-/img/
+/img/tmp.svg
 
 
 # CI

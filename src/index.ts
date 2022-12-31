@@ -5,6 +5,9 @@ import { runTest } from './utils/helper';
 const TESTS = {
   testJson: () => runTest('JSON', ({ data }) => bench.testJson(data), 298),
 
+  testScale: () => runTest('scale', ({ data }) => bench.testScale(data), 1000),
+  testScaleUnmapped: () => runTest('scale (unmapped)', ({ unmappedData }) => bench.testScaleUnmapped(unmappedData), 1000),
+
   testBson: () => runTest('BSON', ({ data }) => bench.testBson(data), 21),
 
   testAvroJs: () => runTest('AVRO JS', ({ data }) => bench.testAvroJs(data), 372),
@@ -48,6 +51,8 @@ const TESTS = {
 async function runDefault() {
   console.log('Running default');
   await TESTS.testJson();
+
+  await TESTS.testScale();
 
   await TESTS.testBson();
 

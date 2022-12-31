@@ -35,73 +35,78 @@ def main():
     OUTPUT_NAME='bench-full.svg'
     ALLOWED_LABELS = [
         "JSON",
+        "scale",
         "JSBIN",
         "AVRO Avsc",
-        "BSER",
-        "BSON",
-        "PROTOBUF JS",
+        # "BSER",
+        # "BSON",
+        # "PROTOBUF JS",
         "PROTOBUF Pbf",
-        "PROTOBUF mixed",
-
+        # "PROTOBUF mixed",
     ]
     plot()
     #
     # Protocol buffers
-    OUTPUT_NAME='bench-protobuf.svg'
-    ALLOWED_LABELS = [
-        "JSON",
-        "PROTOBUF JS",
-        "PROTOBUF Pbf",
-        "PROTOBUF Protons",
-        "PROTOBUF Google",
-        "PROTOBUF mixed",
-    ]
-    plot()
+    # OUTPUT_NAME='bench-protobuf.svg'
+    # ALLOWED_LABELS = [
+    #     "JSON",
+    #     "PROTOBUF JS",
+    #     "PROTOBUF Pbf",
+    #     "PROTOBUF Protons",
+    #     "PROTOBUF Google",
+    #     "PROTOBUF mixed",
+    # ]
+    # plot()
 
     # Result extra
     OUTPUT_NAME='bench-unmapped.svg'
-    ONLY_RATIO = True
+    # ONLY_RATIO = True
 
     # JSON extra
-    OUTPUT_NAME='bench-json-extra.svg'
+    # OUTPUT_NAME='bench-json-extra.svg'
     ALLOWED_LABELS = [
-        "JSON",
+        # "JSON",
         "JSON (unmapped)",
-    ]
-    plot()
-
-    # Avro extra
-    OUTPUT_NAME='bench-avro-extra.svg'
-    ALLOWED_LABELS = [
-        "JSON",
-        "JSON (unmapped)",
-        "AVRO Avsc",
-        "AVRO Avsc (optional)",
-        "AVRO Avsc (unmapped)",
-    ]
-    plot()
-
-    # BSON extra
-    OUTPUT_NAME='bench-bson-extra.svg'
-    ALLOWED_LABELS = [
-        "JSON",
-        "JSON (unmapped)",
-        "BSON",
-        "BSON (unmapped)",
-    ]
-    plot()
-
-    # JSBIN extra
-    OUTPUT_NAME='bench-jsbin-extra.svg'
-    ALLOWED_LABELS = [
-        "JSON",
-        "JSON (unmapped)",
-        "JSBIN",
-        "JSBIN (optional)",
+        "scale (unmapped)",
         "JSBIN (unmapped)",
-        "JSBIN JSON (unmapped)",
+        # "JSBIN JSON (unmapped)",
+        "AVRO Avsc (unmapped)",
+        # "BSON (unmapped)",
     ]
     plot()
+
+    # # Avro extra
+    # OUTPUT_NAME='bench-avro-extra.svg'
+    # ALLOWED_LABELS = [
+    #     "JSON",
+    #     "JSON (unmapped)",
+    #     "AVRO Avsc",
+    #     "AVRO Avsc (optional)",
+    #     "AVRO Avsc (unmapped)",
+    # ]
+    # plot()
+
+    # # BSON extra
+    # OUTPUT_NAME='bench-bson-extra.svg'
+    # ALLOWED_LABELS = [
+    #     "JSON",
+    #     "JSON (unmapped)",
+    #     "BSON",
+    #     "BSON (unmapped)",
+    # ]
+    # plot()
+
+    # # JSBIN extra
+    # OUTPUT_NAME='bench-jsbin-extra.svg'
+    # ALLOWED_LABELS = [
+    #     "JSON",
+    #     "JSON (unmapped)",
+    #     "JSBIN",
+    #     "JSBIN (optional)",
+    #     "JSBIN (unmapped)",
+    #     "JSBIN JSON (unmapped)",
+    # ]
+    # plot()
 
 def plot():
     columns = 3
@@ -113,18 +118,18 @@ def plot():
         ax = plot_x('JSON', 'encodedSize', 1, 'Encoded size', True)
         ax.legend(loc='upper center', bbox_to_anchor=(0.5, 1.38), ncol=columns, fancybox=True)
     else:
-        if ONLY_RATIO:
+        if False:
             plt.figure(figsize=(10, 4.15))
             ax = plot_x('JSON', 'encodedTime', 1, 'Encode time (ratio)', False)
             ax.legend(loc='upper center', bbox_to_anchor=(0.5, 1.38), ncol=columns, fancybox=True)
             plot_x('JSON', 'decodedTime', 2, 'Decode time (ratio)', False)
         else:
-            plt.figure(figsize=(10, 8.5))
+            plt.figure(figsize=(10, 4.15))
             ax = plot_x(None, 'encodedTime', 1, 'Encode time (s)', True)
-            ax.legend(loc='upper center', bbox_to_anchor=(0.5, 1.5), ncol=columns, fancybox=True)
-            plot_x('JSON', 'encodedTime', 2, 'Encode time (ratio)', False)
-            plot_x(None, 'decodedTime', 3, 'Decode time (s)', True)
-            plot_x('JSON', 'decodedTime', 4, 'Decode time (ratio)', False)
+            ax.legend(loc='upper center', bbox_to_anchor=(0.5, 1.38), ncol=columns, fancybox=True)
+            # plot_x('JSON', 'encodedTime', 2, 'Encode time (ratio)', False)
+            plot_x(None, 'decodedTime', 2, 'Decode time (s)', True)
+            # plot_x('JSON', 'decodedTime', 4, 'Decode time (ratio)', False)
 
     if SAVE_IMAGE:
         plt.savefig(f'{OUTPUT_DIR}/{OUTPUT_NAME}')
@@ -140,7 +145,7 @@ def plot_x(baselineKey, yKey, id, yLabel, log):
     baseline = None
     if baselineKey:
         baseline = TEST_DATA[baselineKey]
-    if ONLY_RATIO:
+    if True:
         plt.subplot(2, 1, id)
     else:
         plt.subplot(4, 1, id)
